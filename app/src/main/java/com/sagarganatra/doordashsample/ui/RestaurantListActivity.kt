@@ -32,6 +32,11 @@ class RestaurantListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_restaurant_list)
+        setSupportActionBar(toolBar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(false)
+            title = resources.getString(R.string.restaurant_list_title)
+        }
 
         restaurantListComponent = DaggerRestaurantListComponent.builder()
             .appComponent((application as App).appComponent)
@@ -68,6 +73,7 @@ class RestaurantListActivity : AppCompatActivity() {
                 progressBar.gone()
                 restaurantListRecyclerView.gone()
                 errorTextView.visible()
+                errorTextView.text = resources.getString(R.string.error)
             }
             is RestaurantListState.Restaurants -> {
                 progressBar.gone()

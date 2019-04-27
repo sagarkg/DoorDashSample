@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DoorDashSample</string>
+    <string name="error">Loading failed. Please try again later</string>
+    <string name="restaurant_list_title">Discover</string>
 </resources>

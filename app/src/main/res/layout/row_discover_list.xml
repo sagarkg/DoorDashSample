@@ -3,15 +3,16 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
-        android:minHeight="80dp"
+        android:minHeight="100dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageView"
-        android:layout_width="80dp"
-        android:layout_height="40dp"
-        android:layout_margin="5dp"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:layout_marginVertical="16dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -22,7 +23,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_margin="5dp"
+        android:layout_marginHorizontal="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/imageView"
@@ -34,28 +35,33 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:textStyle="bold"
-            tools:text="Tsing Tao Tsing Tao Tsing Tao Tsing Tao Tsing Tao Tsing Tao Tsing Tao Tsing Tao"
+            android:textSize="16sp"
+            tools:text="Tsing Tao Tsing Tao Tsing Tao Tsing Tao Tsing Tao Tsing Tao"
         />
         <TextView
             android:id="@+id/descTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
+            android:textSize="15sp"
             tools:text="Chinese, soup Chinese, soup Chinese, soup"
 
         />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/statusTextView"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:gravity="bottom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text = "22 min"
+            android:id="@+id/statusTextView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="8dp"
+            android:gravity="bottom"
+            android:textSize="12sp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.800"
+            tools:text="22 min"
     />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
