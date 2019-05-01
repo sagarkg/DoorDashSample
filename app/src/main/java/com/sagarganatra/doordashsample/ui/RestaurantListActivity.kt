@@ -60,6 +60,10 @@ class RestaurantListActivity : AppCompatActivity() {
 
         // Send action to actionStream
         actionStream.accept(RestaurantListAction.LoadRestaurants)
+
+        tryAgainTextView.setOnClickListener{
+            actionStream.accept(RestaurantListAction.LoadRestaurants)
+        }
     }
 
     private fun handleRestaurantListState(state: RestaurantListState) {
@@ -68,12 +72,14 @@ class RestaurantListActivity : AppCompatActivity() {
                 progressBar.visible()
                 restaurantListRecyclerView.gone()
                 errorTextView.gone()
+                tryAgainTextView.gone()
             }
             RestaurantListState.Error -> {
                 progressBar.gone()
                 restaurantListRecyclerView.gone()
                 errorTextView.visible()
                 errorTextView.text = resources.getString(R.string.error)
+                tryAgainTextView.visible()
             }
             is RestaurantListState.Restaurants -> {
                 progressBar.gone()
