@@ -1,7 +1,7 @@
 # DoorDashSample
 Take Home exercise for DoorDash
 
-# Architecutre 
+# Architecture 
 # Model-View-ViewModel + Repository Pattern + Reactive Observer Pattern
 
 - View-ViewModel interaction is done through bidirectional reactive streams.
@@ -13,7 +13,7 @@ Take Home exercise for DoorDash
 - This makes it easy to switch Repository implementations(api or loal db) without affecting rest of the app.
 
 # Libraries 
-- Android Architecutre Components (ViewModel and LiveData)
+- Android Architecture Components (ViewModel and LiveData)
 - RxJava
 - RxRelay
 - Retrofit/Okio
