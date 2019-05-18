@@ -16,11 +16,16 @@ class RestaurantListAdapter(
     private val restaurants: List<Restaurant>
 ) : RecyclerView.Adapter<RestaurantViewHolder>() {
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder {
+
+
         return RestaurantViewHolder(
             LayoutInflater.from(context).inflate(R.layout.row_discover_list, parent, false)
         )
+
     }
+
 
     override fun getItemCount(): Int {
         Timber.d("${restaurants.count()}")
@@ -34,9 +39,6 @@ class RestaurantListAdapter(
 
 class RestaurantViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(context: Context, restaurant: Restaurant) {
-        Timber.d("Name: ${restaurant.business.name}")
-        Timber.d("Desc : ${restaurant.description}")
-        Timber.d("Status : ${restaurant.status}")
 
         itemView.nameTextView.text = restaurant.business.name
         itemView.descTextView.text = restaurant.description

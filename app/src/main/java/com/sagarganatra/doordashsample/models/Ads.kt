@@ -1,5 +1,5 @@
 package com.sagarganatra.doordashsample.models
 
-data class Ads (
+data class Ad (
     val string: String
 )

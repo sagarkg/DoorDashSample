@@ -1,6 +1,7 @@
 package com.sagarganatra.doordashsample.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -16,6 +17,8 @@ import com.sagarganatra.doordashsample.ui.RestaurantListViewModel.RestaurantList
 import com.sagarganatra.doordashsample.utils.gone
 import com.sagarganatra.doordashsample.utils.visible
 import kotlinx.android.synthetic.main.activity_restaurant_list.*
+import kotlinx.android.synthetic.main.row_ads.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class RestaurantListActivity : AppCompatActivity() {
@@ -58,11 +61,19 @@ class RestaurantListActivity : AppCompatActivity() {
         val divider = DividerItemDecoration(restaurantListRecyclerView.context, linearLayoutManager.orientation)
         restaurantListRecyclerView.addItemDecoration(divider)
 
-        // Send action to actionStream
+        // Send action to actionStream to get RestaurantList and Ads
         actionStream.accept(RestaurantListAction.LoadRestaurants)
+
+        // Send action to actionStream to get Ads
+        actionStream.accept(RestaurantListAction.LoadAds)
+
 
         tryAgainTextView.setOnClickListener{
             actionStream.accept(RestaurantListAction.LoadRestaurants)
+        }
+
+        dismissTextView.setOnClickListener{
+            actionStream.accept(RestaurantListAction.DismissAds)
         }
     }
 
@@ -87,6 +98,15 @@ class RestaurantListActivity : AppCompatActivity() {
                 restaurantListRecyclerView.visible()
                 adapter = RestaurantListAdapter(this, state.list)
                 restaurantListRecyclerView.adapter = adapter
+            }
+            is RestaurantListState.Ads -> {
+                // show ads
+                adTextView.text = state.ad.string
+                adsLayout.visible()
+                Timber.d(state.ad.string)
+            }
+            RestaurantListState.DismissAd -> {
+                adsLayout.gone()
             }
 
         }
