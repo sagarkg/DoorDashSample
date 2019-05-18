@@ -47,11 +47,10 @@ class RestaurantListViewModel @Inject constructor(
         subscriptions.clear()
         subscriptions.add(
 
-            adRepository.getAds()
+            restaurantsRepository.getRestaurantsByLatLong(lat, long)
                 .subscribeOn(schedulers.io())
-                .toSingle()
-                .zipWith(restaurantsRepository.getRestaurantsByLatLong(lat, long),
-                    BiFunction{t1: Ad, t2: List<Restaurant> -> RestaurantListState.ViewState(t2, t1)})
+                .zipWith(adRepository.getAds(),
+                    BiFunction{t1: List<Restaurant>, t2: Ad  -> RestaurantListState.ViewState(t1, t2)})
                 .subscribeOn(schedulers.io())
                 .observeOn(schedulers.mainThread())
                 .subscribe(
@@ -108,7 +107,7 @@ class RestaurantListViewModel @Inject constructor(
         object DismissAd: RestaurantListState()
         data class ViewState(
             val list: List<Restaurant>,
-            val ad: Ad?
+            val ad: Ad
         ): RestaurantListState()
     }
 

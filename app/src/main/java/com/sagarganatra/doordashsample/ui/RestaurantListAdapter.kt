@@ -1,7 +1,6 @@
 package com.sagarganatra.doordashsample.ui
 
 import android.content.Context
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,7 @@ import timber.log.Timber
 class RestaurantListAdapter(
     private val context: Context,
     private val restaurants: List<Restaurant>,
-    private val ad: Ad?
+    private val ad: Ad
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
@@ -52,7 +51,7 @@ class RestaurantListAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if( this.ad != null) {
+        return if(!this.ad.isError) {
             if(position == 0) ViewType.AD.ordinal
             else ViewType.RESTAURANT.ordinal
         } else {
