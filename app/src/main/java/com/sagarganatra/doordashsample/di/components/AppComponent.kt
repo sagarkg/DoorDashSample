@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.res.Resources
 import com.sagarganatra.doordashsample.App
 import com.sagarganatra.doordashsample.core.RxSchedulers
+import com.sagarganatra.doordashsample.dataStore.SharedPrefDataStore
 import com.sagarganatra.doordashsample.di.modules.AppModule
 import dagger.Component
 import javax.inject.Singleton
@@ -21,4 +22,5 @@ interface AppComponent {
     val context: Context
     val resources: Resources
     val schedulers: RxSchedulers
+    val prefDataStore: SharedPrefDataStore
 }

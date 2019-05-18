@@ -5,6 +5,8 @@ import android.content.res.Resources
 import com.sagarganatra.doordashsample.App
 import com.sagarganatra.doordashsample.core.DefaultSchedulers
 import com.sagarganatra.doordashsample.core.RxSchedulers
+import com.sagarganatra.doordashsample.dataStore.SharedPrefDataStore
+import com.sagarganatra.doordashsample.dataStore.SharedPrefDataStoreImpl
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -27,4 +29,10 @@ class AppModule(private val app: App) {
     @Provides
     @Singleton
     fun provideSchedulers(): RxSchedulers = DefaultSchedulers()
+
+    @Provides
+    @Singleton
+    fun provideSharedPrefsDataStore(context: Context): SharedPrefDataStore {
+        return SharedPrefDataStoreImpl(context)
+    }
 }
