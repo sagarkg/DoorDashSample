@@ -13,6 +13,7 @@ import com.sagarganatra.doordashsample.utils.LONG
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposables
+import io.reactivex.functions.BiFunction
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -43,42 +44,44 @@ class RestaurantListViewModel @Inject constructor(
 
 
         restaurantListLiveData.postValue(RestaurantListState.Loading)
-        // subscriptions.clear()
+        subscriptions.clear()
         subscriptions.add(
-            restaurantsRepository.getRestaurantsByLatLong(lat, long)
-            .subscribeOn(schedulers.io())
-            .observeOn(schedulers.mainThread())
-            .subscribe(
-                {response -> restaurantListLiveData.postValue(RestaurantListState.Restaurants(response))},
-                {error ->
-                    restaurantListLiveData.postValue(RestaurantListState.Error)
-                    Timber.e(error.toString())
-                }
-            )
-        )
-    }
 
-    private fun loadAds() {
-        // subscriptions.clear()
-        subscriptions.add(
             adRepository.getAds()
+                .subscribeOn(schedulers.io())
+                .toSingle()
+                .zipWith(restaurantsRepository.getRestaurantsByLatLong(lat, long),
+                    BiFunction{t1: Ad, t2: List<Restaurant> -> RestaurantListState.ViewState(t2, t1)})
                 .subscribeOn(schedulers.io())
                 .observeOn(schedulers.mainThread())
                 .subscribe(
-                    {response -> restaurantListLiveData.postValue(RestaurantListState.Ads(response))},
-                    {error -> Timber.e(error.toString())}
+                    {response -> restaurantListLiveData.postValue(response)},
+                    {error ->
+                        restaurantListLiveData.postValue(RestaurantListState.Error)
+                        Timber.e(error.toString())
+                    }
                 )
         )
     }
 
+//    private fun loadAds() {
+//        // subscriptions.clear()
+//        subscriptions.add(
+//            adRepository.getAds()
+//                .subscribeOn(schedulers.io())
+//                .observeOn(schedulers.mainThread())
+//                .subscribe(
+//                    {response -> restaurantListLiveData.postValue(RestaurantListState.Ads(response))},
+//                    {error -> Timber.e(error.toString())}
+//                )
+//        )
+//    }
+
 
     private fun handleRestaurantListActions(action: RestaurantListAction) {
         return when(action) {
-            RestaurantListAction.LoadRestaurants -> {
+            RestaurantListAction.LoadRestaurantsAndAds -> {
                 loadRestaurantsAndAds(LAT.toString(), LONG.toString())
-            }
-            RestaurantListAction.LoadAds -> {
-                loadAds()
             }
             RestaurantListAction.DismissAds -> {
                 adRepository.setDismiss(true)
@@ -103,11 +106,9 @@ class RestaurantListViewModel @Inject constructor(
         object Loading: RestaurantListState()
         object Error: RestaurantListState()
         object DismissAd: RestaurantListState()
-        data class Restaurants(
-            val list: List<Restaurant>
-        ): RestaurantListState()
-        data class Ads(
-            val ad: Ad
+        data class ViewState(
+            val list: List<Restaurant>,
+            val ad: Ad?
         ): RestaurantListState()
     }
 
@@ -118,8 +119,7 @@ class RestaurantListViewModel @Inject constructor(
    *
     */
     sealed class RestaurantListAction {
-        object LoadRestaurants: RestaurantListAction()
-        object LoadAds: RestaurantListAction()
+        object LoadRestaurantsAndAds: RestaurantListAction()
         object DismissAds: RestaurantListAction()
     }
 

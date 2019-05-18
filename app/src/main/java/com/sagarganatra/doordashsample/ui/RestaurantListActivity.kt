@@ -62,19 +62,19 @@ class RestaurantListActivity : AppCompatActivity() {
         restaurantListRecyclerView.addItemDecoration(divider)
 
         // Send action to actionStream to get RestaurantList and Ads
-        actionStream.accept(RestaurantListAction.LoadRestaurants)
+        actionStream.accept(RestaurantListAction.LoadRestaurantsAndAds)
 
         // Send action to actionStream to get Ads
-        actionStream.accept(RestaurantListAction.LoadAds)
+        // actionStream.accept(RestaurantListAction.LoadAds)
 
 
         tryAgainTextView.setOnClickListener{
-            actionStream.accept(RestaurantListAction.LoadRestaurants)
+            actionStream.accept(RestaurantListAction.LoadRestaurantsAndAds)
         }
 
-        dismissTextView.setOnClickListener{
-            actionStream.accept(RestaurantListAction.DismissAds)
-        }
+//        dismissTextView.setOnClickListener{
+//            actionStream.accept(RestaurantListAction.DismissAds)
+//        }
     }
 
     private fun handleRestaurantListState(state: RestaurantListState) {
@@ -92,21 +92,16 @@ class RestaurantListActivity : AppCompatActivity() {
                 errorTextView.text = resources.getString(R.string.error)
                 tryAgainTextView.visible()
             }
-            is RestaurantListState.Restaurants -> {
+            is RestaurantListState.ViewState -> {
                 progressBar.gone()
                 errorTextView.gone()
                 restaurantListRecyclerView.visible()
-                adapter = RestaurantListAdapter(this, state.list)
+                adapter = RestaurantListAdapter(this, state.list, state.ad)
                 restaurantListRecyclerView.adapter = adapter
             }
-            is RestaurantListState.Ads -> {
-                // show ads
-                adTextView.text = state.ad.string
-                adsLayout.visible()
-                Timber.d(state.ad.string)
-            }
             RestaurantListState.DismissAd -> {
-                adsLayout.gone()
+                //adsLayout.gone()
+                actionStream.accept(RestaurantListAction.DismissAds)
             }
 
         }
