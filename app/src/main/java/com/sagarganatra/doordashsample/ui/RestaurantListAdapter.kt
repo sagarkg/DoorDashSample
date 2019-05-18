@@ -16,9 +16,12 @@ import timber.log.Timber
 class RestaurantListAdapter(
     private val context: Context,
     private val restaurants: List<Restaurant>,
-    private val ad: Ad
+    private var ad: Ad
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    fun setAd(ad: Ad) {
+        this.ad = ad
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
@@ -45,7 +48,7 @@ class RestaurantListAdapter(
         if(holder is RestaurantViewHolder) {
             holder.bind(context, restaurants[position])
         } else if (holder is AdViewHolder) {
-            holder.bind(ad)
+            holder.bind(context, ad)
         }
 
     }
@@ -75,11 +78,12 @@ class RestaurantViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 }
 
 class AdViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    fun bind(ad: Ad?) {
+    fun bind(context: Context, ad: Ad?) {
         itemView.adTextView.text = ad?.string
-//        itemView.dismissTextView.setOnContextClickListener{
-//
-//        }
+        itemView.dismissTextView.setOnClickListener {
+            if(context is RestaurantListActivity)
+                context.dismissAds()
+        }
     }
 }
 

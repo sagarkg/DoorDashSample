@@ -12,6 +12,7 @@ import com.sagarganatra.doordashsample.App
 import com.sagarganatra.doordashsample.R
 import com.sagarganatra.doordashsample.di.components.DaggerRestaurantListComponent
 import com.sagarganatra.doordashsample.di.components.RestaurantListComponent
+import com.sagarganatra.doordashsample.models.Ad
 import com.sagarganatra.doordashsample.ui.RestaurantListViewModel.RestaurantListAction
 import com.sagarganatra.doordashsample.ui.RestaurantListViewModel.RestaurantListState
 import com.sagarganatra.doordashsample.utils.gone
@@ -72,9 +73,10 @@ class RestaurantListActivity : AppCompatActivity() {
             actionStream.accept(RestaurantListAction.LoadRestaurantsAndAds)
         }
 
-//        dismissTextView.setOnClickListener{
-//            actionStream.accept(RestaurantListAction.DismissAds)
-//        }
+    }
+
+    fun dismissAds() {
+        actionStream.accept(RestaurantListAction.DismissAds)
     }
 
     private fun handleRestaurantListState(state: RestaurantListState) {
@@ -100,10 +102,11 @@ class RestaurantListActivity : AppCompatActivity() {
                 restaurantListRecyclerView.adapter = adapter
             }
             RestaurantListState.DismissAd -> {
-                //adsLayout.gone()
-                actionStream.accept(RestaurantListAction.DismissAds)
-            }
+                // update adapter
+                adapter.setAd(Ad("", true))
+                adapter.notifyDataSetChanged()
 
+            }
         }
     }
 }

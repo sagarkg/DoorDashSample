@@ -2,7 +2,6 @@ package com.sagarganatra.doordashsample.repository
 
 import com.sagarganatra.doordashsample.dataStore.SharedPrefDataStore
 import com.sagarganatra.doordashsample.models.Ad
-import io.reactivex.Maybe
 import io.reactivex.Single
 import timber.log.Timber
 
