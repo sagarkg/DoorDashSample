@@ -9,12 +9,13 @@ import com.sagarganatra.doordashsample.repository.RestaurantsRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
+import javax.inject.Named
 
 @Module
 class RestaurantListModule {
 
     @Provides
-    fun provideRestaurantsApi(retrofit: Retrofit): RestaurantsApi {
+    fun provideRestaurantsApi(@Named("cached")retrofit: Retrofit): RestaurantsApi {
         return retrofit.create(RestaurantsApi::class.java)
     }
 

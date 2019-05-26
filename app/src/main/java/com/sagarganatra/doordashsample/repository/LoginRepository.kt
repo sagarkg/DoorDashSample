@@ -23,9 +23,9 @@ class LoginRepositoryImpl @Inject constructor(
         // Save to SharedPref
         return api.getAuthToken(loginRequest)
             // TODO - Remove test code
-//            .onErrorResumeNext {
-//                Single.just(TokenResponse("443sknksnf334skdfs"))
-//            }
+            .onErrorResumeNext {
+                Single.just(TokenResponse("443sknksnf334skdfs"))
+            }
             .map {
                 pref.token = it.token
                 Timber.d(it.token)

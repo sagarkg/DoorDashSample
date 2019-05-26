@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import java.io.File
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 
 @Module
 class HttpClientModule {
@@ -23,7 +24,8 @@ class HttpClientModule {
     }
 
     @Provides
-    fun provideHttpClient(
+    @Named("cached")
+    fun provideHttpClientWithCache(
         httpLoggingInterceptor: HttpLoggingInterceptor,
         networkInterceptor: Interceptor,
         cache: Cache
@@ -34,6 +36,20 @@ class HttpClientModule {
             .addInterceptor(httpLoggingInterceptor)
             .addNetworkInterceptor(networkInterceptor)
             .cache(cache)
+            .build()
+    }
+
+
+    @Provides
+    fun provideHttpClient(
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        networkInterceptor: Interceptor
+    ): OkHttpClient {
+        return OkHttpClient.Builder()
+            .readTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .addInterceptor(httpLoggingInterceptor)
+            .addNetworkInterceptor(networkInterceptor)
             .build()
     }
 

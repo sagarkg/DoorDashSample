@@ -14,6 +14,8 @@ import com.sagarganatra.doordashsample.di.components.LoginComponent
 import com.sagarganatra.doordashsample.models.LoginRequest
 import com.sagarganatra.doordashsample.ui.restaurantlist.RestaurantListActivity
 import com.sagarganatra.doordashsample.utils.createLoadingDialog
+import com.sagarganatra.doordashsample.utils.gone
+import com.sagarganatra.doordashsample.utils.visible
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
@@ -31,8 +33,11 @@ class LoginActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_login)
 
-        alertDialog = createLoadingDialog(resources.getString(R.string.singing_in))
+        //Ideally would have a SplashActivity which checks for existence of token and
+        // then navigate to correct place appropriately. But for now I'm doing it from LoginActivity itself
+        hideLoginView()
 
+        alertDialog = createLoadingDialog(resources.getString(R.string.singing_in))
         loginComponent = DaggerLoginComponent.builder()
             .appComponent((application as App).appComponent)
             .build()
@@ -48,6 +53,7 @@ class LoginActivity : AppCompatActivity() {
         // Send ActionStream to ViewModel
         loginViewModel.attach(actionStream)
 
+        actionStream.accept(LoginViewModel.LoginAction.CheckIfTokenExists)
 
 
         loginButton.setOnClickListener{
@@ -62,10 +68,10 @@ class LoginActivity : AppCompatActivity() {
                     resources.getString(R.string.username_cannot_be_empty)
                 if(passwordEditText.text.isEmpty()) passwordEditText.error =
                     resources.getString(R.string.password_cannot_be_empty)
+
+                //TODO - Add validations for username is an email
             }
         }
-
-        actionStream.accept(LoginViewModel.LoginAction.CheckIfTokenExists)
     }
 
     private fun handleLoginState(state: LoginViewModel.LoginState) {
@@ -82,11 +88,13 @@ class LoginActivity : AppCompatActivity() {
                 navigateNext()
             }
             is LoginViewModel.LoginState.NavigateNext -> {
-                alertDialog.dismiss()
-                // Navigate to next screen. Handle Navigate next
-                navigateNext()
+                if(state.navigateNext) {
+                    // Navigate to next screen. Handle Navigate next
+                    navigateNext()
+                } else {
+                    showLoginView()
+                }
             }
-
         }
     }
 
@@ -97,5 +105,19 @@ class LoginActivity : AppCompatActivity() {
     private fun navigateNext() {
         val intent = Intent(this, RestaurantListActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun showLoginView() {
+        welcomeMessageTextView.visible()
+        userNameEditText.visible()
+        passwordEditText.visible()
+        loginButton.visible()
+    }
+
+    private fun hideLoginView() {
+        welcomeMessageTextView.gone()
+        userNameEditText.gone()
+        passwordEditText.gone()
+        loginButton.gone()
     }
 }

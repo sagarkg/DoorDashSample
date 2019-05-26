@@ -7,6 +7,7 @@ import com.sagarganatra.doordashsample.repository.LoginRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
+import javax.inject.Named
 
 @Module
 class LoginModule {

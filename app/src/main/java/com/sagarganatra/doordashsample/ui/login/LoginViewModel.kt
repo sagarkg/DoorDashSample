@@ -40,7 +40,7 @@ class LoginViewModel(
             LoginAction.CheckIfTokenExists -> {
                 if(loginRepository.checkIfTokenExists()) {
                     loginLiveData.postValue(LoginState.NavigateNext(true))
-                }
+                } else loginLiveData.postValue(LoginState.NavigateNext(false))
             }
         }
     }
