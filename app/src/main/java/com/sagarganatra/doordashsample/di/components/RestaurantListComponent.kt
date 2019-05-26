@@ -3,7 +3,7 @@ package com.sagarganatra.doordashsample.di.components
 import com.sagarganatra.doordashsample.di.modules.PerActivity
 import com.sagarganatra.doordashsample.di.modules.RestaurantListModule
 import com.sagarganatra.doordashsample.di.modules.RetrofitModule
-import com.sagarganatra.doordashsample.ui.RestaurantListActivity
+import com.sagarganatra.doordashsample.ui.restaurantlist.RestaurantListActivity
 import dagger.Component
 
 @PerActivity

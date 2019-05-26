@@ -2,6 +2,11 @@
     <string name="app_name">DoorDashSample</string>
     <string name="dismiss">Dismiss</string>
     <string name="error">Loading failed. Please try again</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="login">Login</string>
     <string name="restaurant_list_title">Discover</string>
+    <string name="singing_in">Singing in</string>
     <string name="try_again">Try Again</string>
+    <string name="welcome_to_doordash">Welcome to DoorDash. Please sign in below</string>
 </resources>

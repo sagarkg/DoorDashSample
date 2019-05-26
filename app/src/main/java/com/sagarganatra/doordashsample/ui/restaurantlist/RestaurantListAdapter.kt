@@ -1,4 +1,4 @@
-package com.sagarganatra.doordashsample.ui
+package com.sagarganatra.doordashsample.ui.restaurantlist
 
 import android.content.Context
 import android.view.LayoutInflater

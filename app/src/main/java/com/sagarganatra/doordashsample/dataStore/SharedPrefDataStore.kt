@@ -9,6 +9,7 @@ import kotlin.reflect.KProperty
 interface SharedPrefDataStore {
 
     var isAdDismissed: Boolean
+    var token: String
 }
 
 
@@ -20,11 +21,13 @@ class SharedPrefDataStoreImpl @Inject constructor(
     private val pref = context.applicationContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
     companion object {
+        const val AUTH_TOKEN = "authToken"
         const val IS_AD_DISMISSED = "isAdDismissed"
         const val PREFS_NAME = "doorDashPrefs"
     }
 
     override var isAdDismissed by BooleanPreference(pref, IS_AD_DISMISSED, false)
+    override var token by StringPreference(pref, AUTH_TOKEN, "")
 }
 
 
@@ -41,4 +44,19 @@ class BooleanPreference(
         return preferences.getBoolean(name, defaultValue)
     }
 
+}
+
+class StringPreference(
+    private val preferences: SharedPreferences,
+    private val name: String,
+    private val defaultValue: String
+) : ReadWriteProperty<Any, String> {
+
+    override fun getValue(thisRef: Any, property: KProperty<*>): String {
+        return preferences.getString(name, defaultValue)!!
+    }
+
+    override fun setValue(thisRef: Any, property: KProperty<*>, value: String) {
+        preferences.edit().putString(name, value).apply()
+    }
 }

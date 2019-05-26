@@ -1,4 +1,4 @@
-package com.sagarganatra.doordashsample.ui
+package com.sagarganatra.doordashsample.ui.restaurantlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -15,7 +15,11 @@ class RestaurantListViewModelFactory @Inject constructor(
 ): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(RestaurantListViewModel::class.java)) {
-            return RestaurantListViewModel(restaurantsRepository, adRepository, schedulers) as T
+            return RestaurantListViewModel(
+                restaurantsRepository,
+                adRepository,
+                schedulers
+            ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

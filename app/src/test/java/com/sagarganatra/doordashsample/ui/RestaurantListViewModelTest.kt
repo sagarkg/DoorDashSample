@@ -10,8 +10,9 @@ import com.nhaarman.mockitokotlin2.verify
 import com.sagarganatra.doordashsample.core.TestSchedulers
 import com.sagarganatra.doordashsample.utils.getRestaurantListSampleResponse
 import com.sagarganatra.doordashsample.repository.RestaurantsRepository
-import com.sagarganatra.doordashsample.ui.RestaurantListViewModel.RestaurantListAction
-import com.sagarganatra.doordashsample.ui.RestaurantListViewModel.RestaurantListState
+import com.sagarganatra.doordashsample.ui.restaurantlist.RestaurantListViewModel
+import com.sagarganatra.doordashsample.ui.restaurantlist.RestaurantListViewModel.RestaurantListAction
+import com.sagarganatra.doordashsample.ui.restaurantlist.RestaurantListViewModel.RestaurantListState
 import io.reactivex.Single
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse

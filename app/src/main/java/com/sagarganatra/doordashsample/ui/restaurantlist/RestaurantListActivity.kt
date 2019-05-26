@@ -1,7 +1,6 @@
-package com.sagarganatra.doordashsample.ui
+package com.sagarganatra.doordashsample.ui.restaurantlist
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -13,13 +12,11 @@ import com.sagarganatra.doordashsample.R
 import com.sagarganatra.doordashsample.di.components.DaggerRestaurantListComponent
 import com.sagarganatra.doordashsample.di.components.RestaurantListComponent
 import com.sagarganatra.doordashsample.models.Ad
-import com.sagarganatra.doordashsample.ui.RestaurantListViewModel.RestaurantListAction
-import com.sagarganatra.doordashsample.ui.RestaurantListViewModel.RestaurantListState
+import com.sagarganatra.doordashsample.ui.restaurantlist.RestaurantListViewModel.RestaurantListAction
+import com.sagarganatra.doordashsample.ui.restaurantlist.RestaurantListViewModel.RestaurantListState
 import com.sagarganatra.doordashsample.utils.gone
 import com.sagarganatra.doordashsample.utils.visible
 import kotlinx.android.synthetic.main.activity_restaurant_list.*
-import kotlinx.android.synthetic.main.row_ads.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class RestaurantListActivity : AppCompatActivity() {
@@ -98,7 +95,8 @@ class RestaurantListActivity : AppCompatActivity() {
                 progressBar.gone()
                 errorTextView.gone()
                 restaurantListRecyclerView.visible()
-                adapter = RestaurantListAdapter(this, state.list, state.ad)
+                adapter =
+                    RestaurantListAdapter(this, state.list, state.ad)
                 restaurantListRecyclerView.adapter = adapter
             }
             RestaurantListState.DismissAd -> {

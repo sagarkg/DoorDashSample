@@ -1,4 +1,4 @@
-package com.sagarganatra.doordashsample.ui
+package com.sagarganatra.doordashsample.ui.restaurantlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -50,7 +50,12 @@ class RestaurantListViewModel @Inject constructor(
             restaurantsRepository.getRestaurantsByLatLong(lat, long)
                 .subscribeOn(schedulers.io())
                 .zipWith(adRepository.getAds(),
-                    BiFunction{t1: List<Restaurant>, t2: Ad  -> RestaurantListState.ViewState(t1, t2)})
+                    BiFunction{t1: List<Restaurant>, t2: Ad  ->
+                        RestaurantListState.ViewState(
+                            t1,
+                            t2
+                        )
+                    })
                 .subscribeOn(schedulers.io())
                 .observeOn(schedulers.mainThread())
                 .subscribe(
