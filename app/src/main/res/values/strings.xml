@@ -5,8 +5,10 @@
     <string name="enter_username">Enter Username</string>
     <string name="enter_password">Enter Password</string>
     <string name="login">Login</string>
+    <string name="password_cannot_be_empty">Password cannot be empty</string>
     <string name="restaurant_list_title">Discover</string>
     <string name="singing_in">Singing in</string>
     <string name="try_again">Try Again</string>
+    <string name="username_cannot_be_empty">Username cannot be empty</string>
     <string name="welcome_to_doordash">Welcome to DoorDash. Please sign in below</string>
 </resources>

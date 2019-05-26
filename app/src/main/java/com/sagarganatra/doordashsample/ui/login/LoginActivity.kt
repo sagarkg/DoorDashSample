@@ -58,6 +58,10 @@ class LoginActivity : AppCompatActivity() {
                     passwordEditText.text.toString())))
             } else {
                 // Add message for username and password cannot be empty
+                if(userNameEditText.text.isEmpty()) userNameEditText.error =
+                    resources.getString(R.string.username_cannot_be_empty)
+                if(passwordEditText.text.isEmpty()) passwordEditText.error =
+                    resources.getString(R.string.password_cannot_be_empty)
             }
         }
 
@@ -88,7 +92,7 @@ class LoginActivity : AppCompatActivity() {
 
 
     /**
-     * This could be moved to a NavigationManager class and handled in ViewModel too.
+     * This could be moved to a NavigationManager class which can be injected and called from ViewModel too.
      */
     private fun navigateNext() {
         val intent = Intent(this, RestaurantListActivity::class.java)
