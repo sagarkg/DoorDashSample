@@ -1,5 +1,3 @@
-# DoorDashSample
-Take Home exercise for DoorDash
 
 # Architecture 
 # Model-View-ViewModel + Repository Pattern + Reactive Observer Pattern
